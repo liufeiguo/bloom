@@ -48,16 +48,16 @@ public class TestConcatArray<T> {
 		return c;
 	}
 
-	/*
-	 * static <T> T[] concat(T[] array1, T[] array2) { final Class<?> type1 =
-	 * array1.getClass().getComponentType();
-	 * 
-	 * @SuppressWarnings("unchecked") final T[] joinedArray = (T[])
-	 * Array.newInstance(type1, array1.length + array2.length);
-	 * System.arraycopy(array1, 0, joinedArray, 0, array1.length);
-	 * System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
-	 * return joinedArray; }
-	 */
+	static <T> T[] concat2(T[] array1, T[] array2) {
+		final Class<?> type1 = array1.getClass().getComponentType();
+
+		@SuppressWarnings("unchecked")
+		final T[] joinedArray = (T[]) Array.newInstance(type1, array1.length + array2.length);
+		System.arraycopy(array1, 0, joinedArray, 0, array1.length);
+		System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
+		return joinedArray;
+	}
+
 	public static <T> T[] concat(T[] first, T[] second) {
 		T[] result = Arrays.copyOf(first, first.length + second.length);
 		System.arraycopy(second, 0, result, first.length, second.length);
@@ -78,21 +78,21 @@ public class TestConcatArray<T> {
 		}
 		return result;
 	}
+
 	@SuppressWarnings("unused")
 	private static <T> T[] concat1(T[] a, T[] b) {
-		  final int alen = a.length;
-		  final int blen = b.length;
-		  if (alen == 0) {
-		    return b;
-		  }
-		  if (blen == 0) {
-		    return a;
-		  }
-		  @SuppressWarnings("unchecked")
-		final T[] result = (T[]) java.lang.reflect.Array.
-		      newInstance(a.getClass().getComponentType(), alen + blen);
-		  System.arraycopy(a, 0, result, 0, alen);
-		  System.arraycopy(b, 0, result, alen, blen);
-		  return result;
+		final int alen = a.length;
+		final int blen = b.length;
+		if (alen == 0) {
+			return b;
 		}
+		if (blen == 0) {
+			return a;
+		}
+		@SuppressWarnings("unchecked")
+		final T[] result = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), alen + blen);
+		System.arraycopy(a, 0, result, 0, alen);
+		System.arraycopy(b, 0, result, alen, blen);
+		return result;
+	}
 }
